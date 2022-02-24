@@ -1,8 +1,8 @@
 import "./App.css";
-import { useState } from "react";
+// import { useState } from "react";
 
 function App() {
-  const [selected, setselected] = useState({});
+  // const [selected, setselected] = useState({});
   const matrix = [
     { id: 0, text: "" },
     { id: 1, text: "" },
