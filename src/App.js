@@ -1,40 +1,45 @@
 import "./App.css";
-// import { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function App() {
-  // const [selected, setselected] = useState({});
-  const matrix = [
-    { id: 0, text: "" },
-    { id: 1, text: "" },
-    { id: 2, text: "" },
-    { id: 3, text: "" },
-    { id: 4, text: "" },
-    { id: 5, text: "" },
-    { id: 6, text: "" },
-    { id: 7, text: "" },
-    { id: 8, text: "" },
-    { id: 9, text: "" },
-    { id: 10, text: "" },
-    { id: 11, text: "" },
-    { id: 12, text: "" },
-    { id: 13, text: "" },
-    { id: 14, text: "" },
-    { id: 15, text: "" },
-  ];
+  const [matrix, setMatrix] = useState([
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+  ]);
+  const [highest, setHighest] = useState(0);
+  const [second, setSecond] = useState(0);
+  const [counter, setCounter] = useState(0);
 
-  const handleClick = (id) => {
-    const selectedId = matrix.filter((box) => box.id === id);
-    console.log(id, selectedId.id);
+  const clickHandler = (rowIndex, colIndex) => {
+    let newMatrix = [...matrix];
+    matrix[rowIndex][colIndex] = counter + 1;
+    setCounter(counter + 1);
+    setSecond(highest);
+    setHighest(rowIndex + "" + colIndex);
+    setMatrix(newMatrix);
   };
+
   return (
     <div className="App">
-      <div className="box-container">
-        {matrix.map((box) => (
-          <div className="box" onClick={() => handleClick(box.id)} key={box.id}>
-            {box.text}
-          </div>
-        ))}
-      </div>
+      {matrix.map((row, index) => (
+        <div className="row" key={index}>
+          {row.map((col, colIndex) => (
+            <div
+              key={index + colIndex}
+              className={`col ${
+                (index + "" + colIndex === highest ||
+                  index + "" + colIndex === second) &&
+                "red"
+              }`}
+              onClick={(e) => clickHandler(index, colIndex)}
+            >
+              {col !== 0 && `Box #${col}`}
+            </div>
+          ))}
+        </div>
+      ))}
     </div>
   );
 }
